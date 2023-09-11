@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Shooonng Blog - Greedy Low</title>
+        <link rel="stylesheet" href="../css/default.css" />
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <a href="../">My Hakyll Blog</a>
+            </div>
+            <nav>
+                <a href="../">Home</a>
+                <a href="../about.html">About</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../archive.html">Archive</a>
+            </nav>
+        </header>
+
+        <main role="main">
+            <h1>Greedy Low</h1>
+            <article>
+    <section class="header">
+        Posted on September 13, 2023
+        
+    </section>
+    <section>
+        <p>アルゴ式の貪欲法を使う問題を全て解いたのでここにメモする。</p>
+<h2 id="その１">その１</h2>
+<p><a href="https://algo-method.com/tasks/359">1円玉と5円玉</a></p>
+<p>除算して余剰を求めて足すだけで達成できた。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    n <span class="ot">&lt;- readLn ::</span> <span class="dt">IO</span> <span class="dt">Int</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> res <span class="ot">=</span> n <span class="ot">`div`</span> <span class="dv">5</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> res2 <span class="ot">=</span> n <span class="ot">`mod`</span> <span class="dv">5</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span> <span class="op">$</span> res <span class="op">+</span> res2</span></code></pre></div>
+<h2 id="その2">その2</h2>
+<p><a href="https://algo-method.com/tasks/362">お菓子 1</a></p>
+<p>nが0になるまでloop内の処理を回す。</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">Main</span> <span class="kw">where</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    n <span class="ot">&lt;- readLn ::</span> <span class="dt">IO</span> <span class="dt">Int</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span> <span class="op">$</span> loop <span class="dv">0</span> n</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    loop cnt n <span class="op">|</span> n <span class="op">==</span> <span class="dv">1</span> <span class="ot">=</span> cnt <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>               <span class="op">|</span> <span class="fu">even</span> n <span class="ot">=</span> loop (cnt <span class="op">+</span> <span class="dv">1</span>) (n <span class="ot">`div`</span> <span class="dv">2</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>               <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> loop (cnt <span class="op">+</span> <span class="dv">1</span>) (n <span class="op">-</span> <span class="dv">1</span>)</span></code></pre></div>
+<h2 id="その3">その3</h2>
+<p><a href="https://algo-method.com/tasks/360">コイン問題</a></p>
+<p>ここからいまいち書き方がわからなくなってくる。</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">Main</span> <span class="kw">where</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    n <span class="ot">&lt;- readLn ::</span> <span class="dt">IO</span> <span class="dt">Int</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    a <span class="ot">&lt;-</span> <span class="fu">map</span> <span class="fu">read</span> <span class="op">.</span> <span class="fu">words</span> <span class="op">&lt;$&gt;</span><span class="ot"> getLine ::</span> <span class="dt">IO</span> [<span class="dt">Int</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span> <span class="op">.</span> solve n <span class="op">$</span> <span class="fu">zip</span> [<span class="dv">50</span>,<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">1</span>] a</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>solve _ [] <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>solve x ((y,c)<span class="op">:</span>ycs) <span class="ot">=</span> <span class="kw">case</span> r <span class="kw">of</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span> <span class="ot">-&gt;</span> count</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    _ <span class="ot">-&gt;</span> count <span class="op">+</span> solve r ycs</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        count <span class="ot">=</span> <span class="fu">min</span> c <span class="op">$</span> <span class="fu">div</span> x y</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        r <span class="ot">=</span> x <span class="op">-</span> count <span class="op">*</span> y</span></code></pre></div>
+<h2 id="その4">その4</h2>
+<p><a href="https://algo-method.com/tasks/361">荷物と箱</a></p>
+<p>小さい順にソートをしてカウントを増やしていく感じ</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">Main</span> <span class="kw">where</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.List</span> <span class="kw">as</span> <span class="dt">List</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    [n,m] <span class="ot">&lt;-</span> <span class="fu">map</span> <span class="fu">read</span> <span class="op">.</span> <span class="fu">words</span> <span class="op">&lt;$&gt;</span><span class="ot"> getLine ::</span> <span class="dt">IO</span> [<span class="dt">Int</span>]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    xs <span class="ot">&lt;-</span> <span class="fu">map</span> <span class="fu">read</span> <span class="op">.</span> <span class="fu">words</span> <span class="op">&lt;$&gt;</span><span class="ot"> getLine ::</span> <span class="dt">IO</span> [<span class="dt">Int</span>]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    ys <span class="ot">&lt;-</span> <span class="fu">map</span> <span class="fu">read</span> <span class="op">.</span> <span class="fu">words</span> <span class="op">&lt;$&gt;</span><span class="ot"> getLine ::</span> <span class="dt">IO</span> [<span class="dt">Int</span>]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> xs' <span class="ot">=</span> <span class="fu">reverse</span> <span class="op">$</span> List.sort xs</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> ys' <span class="ot">=</span> <span class="fu">reverse</span> <span class="op">$</span> List.sort ys</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span> <span class="op">$</span> <span class="fu">foldl</span> (\cnt a <span class="ot">-&gt;</span> </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="fu">length</span> ys' <span class="op">&lt;=</span> cnt <span class="kw">then</span> cnt</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span> <span class="kw">if</span> a <span class="op">&lt;=</span> ys' <span class="op">!!</span> cnt <span class="kw">then</span> cnt <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span> cnt) <span class="dv">0</span> xs'</span></code></pre></div>
+<h2 id="その5">その5</h2>
+<p><a href="https://algo-method.com/tasks/364">お菓子 2</a></p>
+<p>3で剰余ができるかそうでないなら-1をするかnが0になるまで繰り返す<br />
+わかりやすい！！</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">Main</span> <span class="kw">where</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    n <span class="ot">&lt;- readLn ::</span> <span class="dt">IO</span> <span class="dt">Int</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> cnt <span class="ot">=</span> countSteps n <span class="dv">0</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span> cnt</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="ot">countSteps ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>countSteps <span class="dv">0</span> cnt <span class="ot">=</span> cnt</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>countSteps n cnt</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> n <span class="ot">`mod`</span> <span class="dv">3</span> <span class="op">==</span> <span class="dv">0</span> <span class="ot">=</span> countSteps (n <span class="ot">`div`</span> <span class="dv">3</span>) (cnt <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> countSteps (n <span class="op">-</span> <span class="dv">1</span>) (cnt <span class="op">+</span> <span class="dv">1</span>)</span></code></pre></div>
+<h2 id="その6">その6</h2>
+<p><a href="https://algo-method.com/tasks/365">巡回セールスマン問題</a></p>
+<p>replicateM nでn回回同じ処理を繰り返すって意味らしい</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">Main</span> <span class="kw">where</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.List</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Ord</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ot">func ::</span> [(<span class="dt">Int</span>, [<span class="dt">Double</span>])] <span class="ot">-&gt;</span> [<span class="dt">Double</span>] <span class="ot">-&gt;</span> <span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">Double</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>func [(_,ab)] o dis <span class="ot">=</span> dis <span class="op">+</span> calcDist ab o</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>func ((i,ab)<span class="op">:</span>iab) o dis <span class="ot">=</span> </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    func iab' o (dis <span class="op">+</span> cal)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        iab'<span class="op">@</span>((_,ab')<span class="op">:</span>_) <span class="ot">=</span> sortOn (calcDist ab <span class="op">.</span> <span class="fu">snd</span>) <span class="op">$</span> <span class="fu">sort</span> iab</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        cal <span class="ot">=</span> calcDist ab ab'</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="ot">calcDist ::</span> [<span class="dt">Double</span>] <span class="ot">-&gt;</span> [<span class="dt">Double</span>] <span class="ot">-&gt;</span> <span class="dt">Double</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>calcDist [a1, b1] [a2, b2] <span class="ot">=</span> <span class="fu">sqrt</span> <span class="op">$</span> (a1 <span class="op">-</span> a2) <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> (b1 <span class="op">-</span> b2) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="ot">getDoubleList ::</span> <span class="dt">IO</span> [<span class="dt">Double</span>]</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>getDoubleList <span class="ot">=</span> <span class="fu">map</span> <span class="fu">read</span> <span class="op">.</span> <span class="fu">words</span> <span class="op">&lt;$&gt;</span> <span class="fu">getLine</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    n <span class="ot">&lt;-</span> <span class="fu">readLn</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    abs<span class="op">@</span>(ab<span class="op">:</span>_) <span class="ot">&lt;-</span> replicateM n getDoubleList</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span> <span class="op">$</span> func (<span class="fu">zip</span> [<span class="dv">0</span><span class="op">..</span>] <span class="fu">abs</span>) ab <span class="fl">0.0</span></span></code></pre></div>
+<h2 id="その7">その7</h2>
+<p><a href="https://algo-method.com/tasks/363">区間スケジューリング問題</a></p>
+<p>終了時間が早い予定を優先的に見にいっている</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">Main</span> <span class="kw">where</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Monad</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.List</span> (sortOn)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    n <span class="ot">&lt;- readLn ::</span> <span class="dt">IO</span> <span class="dt">Int</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    schedules <span class="ot">&lt;-</span> replicateM n <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        [sa, ta] <span class="ot">&lt;-</span> <span class="fu">map</span> <span class="fu">read</span> <span class="op">.</span> <span class="fu">words</span> <span class="op">&lt;$&gt;</span><span class="ot"> getLine ::</span> <span class="dt">IO</span> [<span class="dt">Int</span>]</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span> (sa, ta)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> ids <span class="ot">=</span> [<span class="dv">0</span><span class="op">..</span>n<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        sortedIds <span class="ot">=</span> sortOn(\i <span class="ot">-&gt;</span> <span class="fu">snd</span> (schedules <span class="op">!!</span> i)) ids</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> (_, result) <span class="ot">=</span> <span class="fu">foldl</span> (\(lastTime, count) i <span class="ot">-&gt;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>            <span class="kw">let</span> (sa, ta) <span class="ot">=</span> schedules <span class="op">!!</span> i <span class="kw">in</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                <span class="kw">if</span> sa <span class="op">&lt;</span> lastTime</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                <span class="kw">then</span> (lastTime, count)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                <span class="kw">else</span> (ta, count <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>            ) (<span class="dv">0</span>, <span class="dv">0</span>) sortedIds</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span> result</span></code></pre></div>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </footer>
+    </body>
+</html>
